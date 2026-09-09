@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGHMS Doctor Portal - Help & Support</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <img src="emblem.svg" alt="Emblem" class="emblem-img">
+            <div class="brand-text">
+                <span class="brand-title">SGHMS</span>
+                <span class="brand-subtitle">Smart Government Healthcare<br>Management System</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item"><span class="material-icons-outlined">dashboard</span> Dashboard</a>
+            <a href="appointments.html" class="nav-item"><span class="material-icons-outlined">calendar_today</span> My Appointments</a>
+            <a href="patients.html" class="nav-item"><span class="material-icons-outlined">people</span> Patients</a>
+            <a href="queue.html" class="nav-item"><span class="material-icons-outlined">format_list_numbered</span> Queue</a>
+            <a href="prescription.html" class="nav-item"><span class="material-icons-outlined">medication</span> Prescriptions</a>
+            <a href="records.html" class="nav-item"><span class="material-icons-outlined">folder_shared</span> Medical Records</a>
+            <a href="alerts.html" class="nav-item"><span class="material-icons-outlined">notifications</span> Alerts</a>
+            <a href="profile.html" class="nav-item"><span class="material-icons-outlined">person</span> Profile</a>
+            <a href="help.html" class="nav-item active"><span class="material-icons-outlined">help_outline</span> Help &amp; Support</a>
+        </nav>
+        <div class="sidebar-footer"><a href="#" class="nav-item logout"><span class="material-icons-outlined">logout</span> Log Out</a></div>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <div class="mobile-brand">SGHMS</div>
+            <div class="header-left"><button class="hamburger-btn" id="menuToggle"><span class="material-icons-outlined">menu</span></button></div>
+            <div class="header-right">
+                <button class="notification-btn"><span class="material-icons-outlined">notifications_none</span><span class="badge"></span></button>
+                <div class="doctor-profile">
+                    <div class="doctor-avatar"><svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="20" r="10" fill="#3b82f6"/><path d="M16 48c0-8.837 7.163-16 16-16s16 7.163 16 16" fill="#3b82f6"/><circle cx="32" cy="42" r="2" fill="white"/></svg></div>
+                    <div class="doctor-info"><span class="name">Dr. Priya Sharma</span><span class="role">General Medicine</span></div>
+                </div>
+            </div>
+        </header>
+        <div class="status-bar">
+            <span class="status-bar-label">My Status:</span>
+            <button class="status-btn active" data-status="opd"><span class="status-dot-ind"></span> In OPD</button>
+            <button class="status-btn" data-status="emergency"><span class="status-dot-ind"></span> Emergency Ward</button>
+            <button class="status-btn" data-status="rounds"><span class="status-dot-ind"></span> Rounds</button>
+            <button class="status-btn" data-status="break"><span class="status-dot-ind"></span> Break</button>
+        </div>
+        <div class="queue-pause-banner" id="queuePauseBanner"><span class="material-icons-outlined">pause_circle</span><span class="pause-text">Queue paused</span></div>
+
+        <section class="page-content">
+            <h1 class="page-title">Help & Support</h1>
+
+            <!-- Quick Help Cards -->
+            <div class="help-grid">
+                <div class="help-card animate-in delay-1">
+                    <div class="hc-icon" style="background:var(--accent-blue-bg);color:var(--accent-blue);"><span class="material-icons-outlined">play_circle</span></div>
+                    <div>
+                        <div class="hc-title">Getting Started Guide</div>
+                        <div class="hc-desc">Learn the basics of the Doctor Portal — navigating the dashboard, managing your queue, and writing prescriptions.</div>
+                    </div>
+                </div>
+                <div class="help-card animate-in delay-1">
+                    <div class="hc-icon" style="background:var(--accent-green-bg);color:var(--accent-green);"><span class="material-icons-outlined">campaign</span></div>
+                    <div>
+                        <div class="hc-title">Queue Management</div>
+                        <div class="hc-desc">How to call patients, skip, recall, and manage your queue. Includes status switching and emergency protocols.</div>
+                    </div>
+                </div>
+                <div class="help-card animate-in delay-2">
+                    <div class="hc-icon" style="background:var(--accent-purple-bg);color:var(--accent-purple);"><span class="material-icons-outlined">auto_awesome</span></div>
+                    <div>
+                        <div class="hc-title">AI Pre-Read Summary</div>
+                        <div class="hc-desc">Understanding the AI-generated patient summary — what data it uses, how to interpret it, and how to provide feedback.</div>
+                    </div>
+                </div>
+                <div class="help-card animate-in delay-2">
+                    <div class="hc-icon" style="background:var(--accent-orange-bg);color:var(--accent-orange);"><span class="material-icons-outlined">medication</span></div>
+                    <div>
+                        <div class="hc-title">E-Prescription System</div>
+                        <div class="hc-desc">Using the checkbox-based prescription system, adding custom medicines, and printing prescriptions for the government pharmacy.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Accordion -->
+            <div class="card animate-in delay-3">
+                <div class="card-header"><h2>Frequently Asked Questions</h2></div>
+                <div class="faq-section">
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            How do I call the next patient from the queue?
+                            <span class="material-icons-outlined">expand_more</span>
+                        </button>
+                        <div class="faq-answer">
+                            Navigate to the <strong>Queue</strong> page from the sidebar. You'll see the current patient being served at the top. Click the large green <strong>"Call Next"</strong> button to advance to the next patient. The patient's token number will be announced on the display screen in the waiting area. You can also <strong>Skip</strong> a patient or <strong>Recall</strong> the current patient.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            What happens when I switch to Emergency Ward status?
+                            <span class="material-icons-outlined">expand_more</span>
+                        </button>
+                        <div class="faq-answer">
+                            When you toggle your status to <strong>"Emergency Ward"</strong>, the queue is automatically paused. A notification banner appears for all waiting patients indicating that the doctor is in the emergency ward. You will not be able to call next patients until you switch back to <strong>"In OPD"</strong> status. The same applies to <strong>Rounds</strong> and <strong>Break</strong> statuses.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            How does the AI Pre-Read Summary work?
+                            <span class="material-icons-outlined">expand_more</span>
+                        </button>
+                        <div class="faq-answer">
+                            The AI Summary is automatically generated when a patient is called from the queue. It pulls data from the patient's <strong>triage notes</strong> (symptoms, vitals entered by the nurse), <strong>past visit history</strong>, <strong>known allergies</strong>, and <strong>chronic conditions</strong>. The summary is designed to save you 2-3 minutes per consultation by providing a quick overview before the patient sits down. You can disable this feature from <strong>Profile → Prescription Defaults</strong>.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            Can I prescribe medicines not in the government pharmacy list?
+                            <span class="material-icons-outlined">expand_more</span>
+                        </button>
+                        <div class="faq-answer">
+                            The checkbox interface shows medicines currently stocked in the government pharmacy. If you need to prescribe a medicine not in the list, you can use the <strong>Advice/Instructions</strong> text area at the bottom of the prescription page to write custom medicines or provide instructions for the patient to purchase from an outside pharmacy.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            How do I print a prescription?
+                            <span class="material-icons-outlined">expand_more</span>
+                        </button>
+                        <div class="faq-answer">
+                            After selecting medicines, dosage, and duration on the <strong>Prescription</strong> page, click <strong>"Generate & Print"</strong>. A print-friendly prescription will be generated with the SGHMS header, patient details, diagnosis, medicines, and your signature. The browser's print dialog will open automatically. Use A5 paper size for OPD prescription slips.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            I'm getting a Drug Interaction Alert — what should I do?
+                            <span class="material-icons-outlined">expand_more</span>
+                        </button>
+                        <div class="faq-answer">
+                            Drug interaction alerts are triggered when two prescribed medicines may cause adverse effects when taken together. Review the alert carefully — it will tell you the specific risk (e.g., increased bleeding, kidney damage). You can choose to <strong>proceed with caution</strong>, <strong>adjust the dose</strong>, or <strong>substitute</strong> one of the medicines. All alerts are logged in the <strong>Alerts</strong> page for audit purposes.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact IT Support -->
+            <div class="card animate-in delay-4" style="margin-top:20px;">
+                <div class="card-header"><h2>IT Support Contact</h2></div>
+                <div style="padding:4px 20px 20px;">
+                    <div class="setting-row">
+                        <div>
+                            <div class="setting-label">Hospital IT Helpdesk</div>
+                            <div class="setting-desc">For system issues, login problems, or printer connectivity</div>
+                        </div>
+                        <span style="font-weight:700;color:var(--accent-blue);">📞 Ext. 1234</span>
+                    </div>
+                    <div class="setting-row">
+                        <div>
+                            <div class="setting-label">Email Support</div>
+                            <div class="setting-desc">For non-urgent issues and feature requests</div>
+                        </div>
+                        <span style="font-weight:600;color:var(--accent-blue);">it.support@sghms.gov.in</span>
+                    </div>
+                    <div class="setting-row">
+                        <div>
+                            <div class="setting-label">Emergency IT Support</div>
+                            <div class="setting-desc">For critical system failures during OPD hours</div>
+                        </div>
+                        <span style="font-weight:700;color:var(--accent-red);">📞 +91 98765 00000</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        function toggleFaq(btn) {
+            const answer = btn.nextElementSibling;
+            const isOpen = btn.classList.contains('open');
+
+            // Close all
+            document.querySelectorAll('.faq-question').forEach(q => {
+                q.classList.remove('open');
+                q.nextElementSibling.classList.remove('show');
+            });
+
+            // Toggle current
+            if (!isOpen) {
+                btn.classList.add('open');
+                answer.classList.add('show');
+            }
+        }
+    </script>
+</body>
+</html>

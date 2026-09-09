@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGHMS Doctor Portal - Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <img src="emblem.svg" alt="Emblem" class="emblem-img">
+            <div class="brand-text">
+                <span class="brand-title">SGHMS</span>
+                <span class="brand-subtitle">Smart Government Healthcare<br>Management System</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item"><span class="material-icons-outlined">dashboard</span> Dashboard</a>
+            <a href="appointments.html" class="nav-item"><span class="material-icons-outlined">calendar_today</span> My Appointments</a>
+            <a href="patients.html" class="nav-item"><span class="material-icons-outlined">people</span> Patients</a>
+            <a href="queue.html" class="nav-item"><span class="material-icons-outlined">format_list_numbered</span> Queue</a>
+            <a href="prescription.html" class="nav-item"><span class="material-icons-outlined">medication</span> Prescriptions</a>
+            <a href="records.html" class="nav-item"><span class="material-icons-outlined">folder_shared</span> Medical Records</a>
+            <a href="alerts.html" class="nav-item"><span class="material-icons-outlined">notifications</span> Alerts</a>
+            <a href="profile.html" class="nav-item active"><span class="material-icons-outlined">person</span> Profile</a>
+            <a href="help.html" class="nav-item"><span class="material-icons-outlined">help_outline</span> Help &amp; Support</a>
+        </nav>
+        <div class="sidebar-footer"><a href="#" class="nav-item logout"><span class="material-icons-outlined">logout</span> Log Out</a></div>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <div class="mobile-brand">SGHMS</div>
+            <div class="header-left"><button class="hamburger-btn" id="menuToggle"><span class="material-icons-outlined">menu</span></button></div>
+            <div class="header-right">
+                <button class="notification-btn"><span class="material-icons-outlined">notifications_none</span><span class="badge"></span></button>
+                <div class="doctor-profile">
+                    <div class="doctor-avatar"><svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="20" r="10" fill="#3b82f6"/><path d="M16 48c0-8.837 7.163-16 16-16s16 7.163 16 16" fill="#3b82f6"/><circle cx="32" cy="42" r="2" fill="white"/></svg></div>
+                    <div class="doctor-info"><span class="name">Dr. Priya Sharma</span><span class="role">General Medicine</span></div>
+                </div>
+            </div>
+        </header>
+        <div class="status-bar">
+            <span class="status-bar-label">My Status:</span>
+            <button class="status-btn active" data-status="opd"><span class="status-dot-ind"></span> In OPD</button>
+            <button class="status-btn" data-status="emergency"><span class="status-dot-ind"></span> Emergency Ward</button>
+            <button class="status-btn" data-status="rounds"><span class="status-dot-ind"></span> Rounds</button>
+            <button class="status-btn" data-status="break"><span class="status-dot-ind"></span> Break</button>
+        </div>
+        <div class="queue-pause-banner" id="queuePauseBanner"><span class="material-icons-outlined">pause_circle</span><span class="pause-text">Queue paused</span></div>
+
+        <section class="page-content">
+            <h1 class="page-title">My Profile</h1>
+
+            <div class="profile-layout">
+                <!-- Profile Card -->
+                <div class="profile-card-main animate-in delay-1">
+                    <div class="profile-avatar-lg">
+                        <span class="material-icons-outlined">person</span>
+                    </div>
+                    <div class="p-name">Dr. Priya Sharma</div>
+                    <div class="p-dept">General Medicine</div>
+
+                    <div class="p-detail"><span class="label">Employee ID</span><span class="value">SGHMS-0247</span></div>
+                    <div class="p-detail"><span class="label">MCI Reg. No.</span><span class="value">MCI-12345</span></div>
+                    <div class="p-detail"><span class="label">Department</span><span class="value">General Medicine</span></div>
+                    <div class="p-detail"><span class="label">Designation</span><span class="value">Senior Medical Officer</span></div>
+                    <div class="p-detail"><span class="label">Phone</span><span class="value">+91 98765 43210</span></div>
+                    <div class="p-detail"><span class="label">Email</span><span class="value">priya.sharma@sghms.gov.in</span></div>
+                    <div class="p-detail"><span class="label">Joined</span><span class="value">15 Mar 2019</span></div>
+                </div>
+
+                <!-- Settings -->
+                <div class="profile-settings">
+                    <div class="settings-card animate-in delay-2">
+                        <div class="sc-header">Schedule Settings</div>
+                        <div class="sc-body">
+                            <div class="setting-row">
+                                <div>
+                                    <div class="setting-label">OPD Timing</div>
+                                    <div class="setting-desc">09:00 AM — 01:00 PM, 02:00 PM — 05:00 PM</div>
+                                </div>
+                                <button class="btn btn-secondary btn-sm">Edit</button>
+                            </div>
+                            <div class="setting-row">
+                                <div>
+                                    <div class="setting-label">Consultation Duration</div>
+                                    <div class="setting-desc">20 minutes per patient (default)</div>
+                                </div>
+                                <select class="filter-select" style="width:auto;">
+                                    <option>15 min</option><option selected>20 min</option><option>30 min</option>
+                                </select>
+                            </div>
+                            <div class="setting-row">
+                                <div>
+                                    <div class="setting-label">Max Patients per Day</div>
+                                    <div class="setting-desc">Currently set to 30 patients</div>
+                                </div>
+                                <select class="filter-select" style="width:auto;">
+                                    <option>20</option><option>25</option><option selected>30</option><option>35</option><option>40</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card animate-in delay-3">
+                        <div class="sc-header">Notification Preferences</div>
+                        <div class="sc-body">
+                            <div class="setting-row">
+                                <div>
+                                    <div class="setting-label">Drug Interaction Alerts</div>
+                                    <div class="setting-desc">Show alerts for potential drug interactions</div>
+                                </div>
+                                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                            </div>
+                            <div class="setting-row">
+                                <div>
+                                    <div class="setting-label">Allergy Alerts</div>
+                                    <div class="setting-desc">Show alerts for known patient allergies</div>
+                                </div>
+                                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                            </div>
+                            <div class="setting-row">
+                                <div>
+                                    <div class="setting-label">Lab Results Notification</div>
+                                    <div class="setting-desc">Notify when lab reports are ready</div>
+                                </div>
+                                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                            </div>
+                            <div class="setting-row">
+                                <div>
+                                    <div class="setting-label">Queue Updates</div>
+                                    <div class="setting-desc">Notify when queue is building up</div>
+                                </div>
+                                <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+                            </div>
+                            <div class="setting-row">
+                                <div>
+                                    <div class="setting-label">Sound Alerts</div>
+                                    <div class="setting-desc">Play sound for critical alerts</div>
+                                </div>
+                                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-card animate-in delay-4">
+                        <div class="sc-header">Prescription Defaults</div>
+                        <div class="sc-body">
+                            <div class="setting-row">
+                                <div>
+                                    <div class="setting-label">Default Prescription Language</div>
+                                    <div class="setting-desc">Language used for printed prescriptions</div>
+                                </div>
+                                <select class="filter-select" style="width:auto;">
+                                    <option selected>English</option><option>Hindi</option><option>Bilingual</option>
+                                </select>
+                            </div>
+                            <div class="setting-row">
+                                <div>
+                                    <div class="setting-label">Auto-include Follow-up Date</div>
+                                    <div class="setting-desc">Automatically add a follow-up reminder on prescriptions</div>
+                                </div>
+                                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                            </div>
+                            <div class="setting-row">
+                                <div>
+                                    <div class="setting-label">Show AI Pre-Read Summary</div>
+                                    <div class="setting-desc">Display AI-generated patient summary before consultation</div>
+                                </div>
+                                <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

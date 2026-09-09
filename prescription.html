@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGHMS Doctor Portal - E-Prescription</title>
+    <meta name="description" content="Fast e-prescription with checkbox interface for government pharmacy medicines.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <img src="emblem.svg" alt="Emblem" class="emblem-img">
+            <div class="brand-text">
+                <span class="brand-title">SGHMS</span>
+                <span class="brand-subtitle">Smart Government Healthcare<br>Management System</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item"><span class="material-icons-outlined">dashboard</span> Dashboard</a>
+            <a href="appointments.html" class="nav-item"><span class="material-icons-outlined">calendar_today</span> My Appointments</a>
+            <a href="patients.html" class="nav-item"><span class="material-icons-outlined">people</span> Patients</a>
+            <a href="queue.html" class="nav-item"><span class="material-icons-outlined">format_list_numbered</span> Queue</a>
+            <a href="prescription.html" class="nav-item active"><span class="material-icons-outlined">medication</span> Prescriptions</a>
+            <a href="records.html" class="nav-item"><span class="material-icons-outlined">folder_shared</span> Medical Records</a>
+            <a href="alerts.html" class="nav-item"><span class="material-icons-outlined">notifications</span> Alerts</a>
+            <a href="profile.html" class="nav-item"><span class="material-icons-outlined">person</span> Profile</a>
+            <a href="help.html" class="nav-item"><span class="material-icons-outlined">help_outline</span> Help &amp; Support</a>
+        </nav>
+        <div class="sidebar-footer"><a href="#" class="nav-item logout"><span class="material-icons-outlined">logout</span> Log Out</a></div>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <div class="mobile-brand">SGHMS</div>
+            <div class="header-left"><button class="hamburger-btn" id="menuToggle"><span class="material-icons-outlined">menu</span></button></div>
+            <div class="header-right">
+                <button class="notification-btn"><span class="material-icons-outlined">notifications_none</span><span class="badge"></span></button>
+                <div class="doctor-profile">
+                    <div class="doctor-avatar"><svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="20" r="10" fill="#3b82f6"/><path d="M16 48c0-8.837 7.163-16 16-16s16 7.163 16 16" fill="#3b82f6"/><circle cx="32" cy="42" r="2" fill="white"/></svg></div>
+                    <div class="doctor-info"><span class="name">Dr. Priya Sharma</span><span class="role">General Medicine</span></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="status-bar">
+            <span class="status-bar-label">My Status:</span>
+            <button class="status-btn active" data-status="opd"><span class="status-dot-ind"></span> In OPD</button>
+            <button class="status-btn" data-status="emergency"><span class="status-dot-ind"></span> Emergency Ward</button>
+            <button class="status-btn" data-status="rounds"><span class="status-dot-ind"></span> Rounds</button>
+            <button class="status-btn" data-status="break"><span class="status-dot-ind"></span> Break</button>
+        </div>
+        <div class="queue-pause-banner" id="queuePauseBanner"><span class="material-icons-outlined">pause_circle</span><span class="pause-text">Queue paused</span></div>
+
+        <section class="page-content">
+            <h1 class="page-title">Fast E-Prescription</h1>
+
+            <!-- Patient Header -->
+            <div class="rx-header animate-in delay-1">
+                <div class="rx-patient-info">
+                    <span class="id-badge" style="font-size:0.85rem;padding:5px 12px;">A-340</span>
+                    <div>
+                        <div class="rx-name">Amit Verma</div>
+                        <div class="rx-meta">42 yrs, Male • ABHA: 1234-5678-9012</div>
+                    </div>
+                </div>
+                <div class="rx-allergy-strip">
+                    <span class="material-icons-outlined" style="font-size:16px">warning</span>
+                    Allergies: Penicillin, Sulfonamides
+                </div>
+            </div>
+
+            <div class="rx-layout">
+                <!-- Left: Medicine Selection -->
+                <div>
+                    <!-- Diagnosis -->
+                    <div class="diagnosis-section animate-in delay-2">
+                        <div class="section-label">Diagnosis</div>
+                        <div class="search-input-wrap">
+                            <span class="material-icons-outlined">search</span>
+                            <input type="text" class="search-input" id="diagnosisSearch" placeholder="Search ICD-10 code or diagnosis..." list="diagnosisList">
+                            <datalist id="diagnosisList">
+                                <option value="I10 - Essential Hypertension">
+                                <option value="J02.9 - Acute Pharyngitis">
+                                <option value="K29.1 - Acute Gastritis">
+                                <option value="R51 - Headache">
+                                <option value="M54.5 - Low Back Pain">
+                                <option value="J06.9 - Upper Respiratory Infection">
+                                <option value="L30.9 - Dermatitis, Unspecified">
+                                <option value="E11.9 - Type 2 Diabetes">
+                                <option value="N39.0 - Urinary Tract Infection">
+                                <option value="A09 - Acute Gastroenteritis">
+                            </datalist>
+                        </div>
+                    </div>
+
+                    <!-- Medicine Categories -->
+                    <div class="section-label animate-in delay-3">Medicines (Government Pharmacy Stock)</div>
+
+                    <!-- Analgesics -->
+                    <div class="medicine-category animate-in delay-3">
+                        <div class="category-header open" onclick="toggleCategory(this)">
+                            <span class="cat-icon">💊</span>
+                            <span class="cat-name">Analgesics & Antipyretics</span>
+                            <span class="cat-count">4 items</span>
+                            <span class="material-icons-outlined">expand_more</span>
+                        </div>
+                        <div class="medicine-grid">
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Paracetamol 500mg" data-category="Analgesics" onchange="updateSummary()">
+                                <span class="med-name">Paracetamol</span>
+                                <span class="med-strength">500mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>1-0-1</option><option>1-1-1</option><option>0-0-1</option><option>SOS</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>3 days</option><option>5 days</option><option>7 days</option><option>10 days</option><option>14 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Ibuprofen 400mg" data-category="Analgesics" onchange="updateSummary()">
+                                <span class="med-name">Ibuprofen</span>
+                                <span class="med-strength">400mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>1-0-1</option><option>1-1-1</option><option>0-0-1</option><option>SOS</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>3 days</option><option>5 days</option><option>7 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Diclofenac 50mg" data-category="Analgesics" onchange="updateSummary()">
+                                <span class="med-name">Diclofenac Sodium</span>
+                                <span class="med-strength">50mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>1-0-1</option><option>0-0-1</option><option>SOS</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>3 days</option><option>5 days</option><option>7 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Tramadol 50mg" data-category="Analgesics" onchange="updateSummary()">
+                                <span class="med-name">Tramadol</span>
+                                <span class="med-strength">50mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>0-0-1</option><option>1-0-1</option><option>SOS</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>3 days</option><option>5 days</option></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Antibiotics -->
+                    <div class="medicine-category animate-in delay-4">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <span class="cat-icon">🦠</span>
+                            <span class="cat-name">Antibiotics</span>
+                            <span class="cat-count">5 items</span>
+                            <span class="material-icons-outlined">expand_more</span>
+                        </div>
+                        <div class="medicine-grid collapsed">
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Amoxicillin 500mg" data-category="Antibiotics" onchange="updateSummary()">
+                                <span class="med-name">Amoxicillin</span>
+                                <span class="med-strength">500mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>1-1-1</option><option>1-0-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>5 days</option><option>7 days</option><option>10 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Azithromycin 500mg" data-category="Antibiotics" onchange="updateSummary()">
+                                <span class="med-name">Azithromycin</span>
+                                <span class="med-strength">500mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>0-0-1</option><option>1-0-0</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>3 days</option><option>5 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Ciprofloxacin 500mg" data-category="Antibiotics" onchange="updateSummary()">
+                                <span class="med-name">Ciprofloxacin</span>
+                                <span class="med-strength">500mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>1-0-1</option><option>1-1-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>5 days</option><option>7 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Doxycycline 100mg" data-category="Antibiotics" onchange="updateSummary()">
+                                <span class="med-name">Doxycycline</span>
+                                <span class="med-strength">100mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>1-0-1</option><option>0-0-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>5 days</option><option>7 days</option><option>10 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Metronidazole 400mg" data-category="Antibiotics" onchange="updateSummary()">
+                                <span class="med-name">Metronidazole</span>
+                                <span class="med-strength">400mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>1-1-1</option><option>1-0-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>5 days</option><option>7 days</option></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Antacids -->
+                    <div class="medicine-category animate-in delay-4">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <span class="cat-icon">🫁</span>
+                            <span class="cat-name">Antacids & GI</span>
+                            <span class="cat-count">4 items</span>
+                            <span class="material-icons-outlined">expand_more</span>
+                        </div>
+                        <div class="medicine-grid collapsed">
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Omeprazole 20mg" data-category="Antacids" onchange="updateSummary()">
+                                <span class="med-name">Omeprazole</span><span class="med-strength">20mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>1-0-0</option><option>1-0-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>7 days</option><option>14 days</option><option>30 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Pantoprazole 40mg" data-category="Antacids" onchange="updateSummary()">
+                                <span class="med-name">Pantoprazole</span><span class="med-strength">40mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>1-0-0</option><option>1-0-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>7 days</option><option>14 days</option><option>30 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Ranitidine 150mg" data-category="Antacids" onchange="updateSummary()">
+                                <span class="med-name">Ranitidine</span><span class="med-strength">150mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>1-0-1</option><option>0-0-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>5 days</option><option>7 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Domperidone 10mg" data-category="Antacids" onchange="updateSummary()">
+                                <span class="med-name">Domperidone</span><span class="med-strength">10mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>1-1-1</option><option>1-0-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>3 days</option><option>5 days</option></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Antihistamines -->
+                    <div class="medicine-category animate-in delay-5">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <span class="cat-icon">🤧</span>
+                            <span class="cat-name">Antihistamines</span>
+                            <span class="cat-count">3 items</span>
+                            <span class="material-icons-outlined">expand_more</span>
+                        </div>
+                        <div class="medicine-grid collapsed">
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Cetirizine 10mg" data-category="Antihistamines" onchange="updateSummary()">
+                                <span class="med-name">Cetirizine</span><span class="med-strength">10mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>0-0-1</option><option>1-0-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>5 days</option><option>7 days</option><option>14 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Levocetirizine 5mg" data-category="Antihistamines" onchange="updateSummary()">
+                                <span class="med-name">Levocetirizine</span><span class="med-strength">5mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>0-0-1</option><option>1-0-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>5 days</option><option>7 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Chlorpheniramine 4mg" data-category="Antihistamines" onchange="updateSummary()">
+                                <span class="med-name">Chlorpheniramine Maleate</span><span class="med-strength">4mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>1-1-1</option><option>0-0-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>3 days</option><option>5 days</option></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Antihypertensives -->
+                    <div class="medicine-category animate-in delay-5">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <span class="cat-icon">❤️</span>
+                            <span class="cat-name">Antihypertensives</span>
+                            <span class="cat-count">4 items</span>
+                            <span class="material-icons-outlined">expand_more</span>
+                        </div>
+                        <div class="medicine-grid collapsed">
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Amlodipine 5mg" data-category="Antihypertensives" onchange="updateSummary()">
+                                <span class="med-name">Amlodipine</span><span class="med-strength">5mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>1-0-0</option><option>0-0-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>30 days</option><option>14 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Telmisartan 40mg" data-category="Antihypertensives" onchange="updateSummary()">
+                                <span class="med-name">Telmisartan</span><span class="med-strength">40mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>1-0-0</option><option>0-0-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>30 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Atenolol 50mg" data-category="Antihypertensives" onchange="updateSummary()">
+                                <span class="med-name">Atenolol</span><span class="med-strength">50mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>1-0-0</option><option>1-0-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>30 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Hydrochlorothiazide 12.5mg" data-category="Antihypertensives" onchange="updateSummary()">
+                                <span class="med-name">Hydrochlorothiazide</span><span class="med-strength">12.5mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>1-0-0</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>30 days</option></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vitamins & Supplements -->
+                    <div class="medicine-category animate-in delay-6">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <span class="cat-icon">🧬</span>
+                            <span class="cat-name">Vitamins & Supplements</span>
+                            <span class="cat-count">4 items</span>
+                            <span class="material-icons-outlined">expand_more</span>
+                        </div>
+                        <div class="medicine-grid collapsed">
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Vitamin B-Complex" data-category="Vitamins" onchange="updateSummary()">
+                                <span class="med-name">Vitamin B-Complex</span><span class="med-strength">Tab</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>0-0-1</option><option>1-0-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>14 days</option><option>30 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Vitamin D3 60000 IU" data-category="Vitamins" onchange="updateSummary()">
+                                <span class="med-name">Vitamin D3 (Cholecalciferol)</span><span class="med-strength">60000 IU</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>Once weekly</option><option>Once monthly</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>8 weeks</option><option>12 weeks</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Iron + Folic Acid" data-category="Vitamins" onchange="updateSummary()">
+                                <span class="med-name">Iron + Folic Acid</span><span class="med-strength">Tab</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>0-0-1</option><option>1-0-0</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>30 days</option><option>60 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Calcium + Vitamin D3" data-category="Vitamins" onchange="updateSummary()">
+                                <span class="med-name">Calcium + Vitamin D3</span><span class="med-strength">500mg</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>0-0-1</option><option>1-0-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>30 days</option><option>60 days</option></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Topical -->
+                    <div class="medicine-category animate-in delay-6">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <span class="cat-icon">🧴</span>
+                            <span class="cat-name">Topical Preparations</span>
+                            <span class="cat-count">3 items</span>
+                            <span class="material-icons-outlined">expand_more</span>
+                        </div>
+                        <div class="medicine-grid collapsed">
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Povidone-Iodine (Betadine)" data-category="Topical" onchange="updateSummary()">
+                                <span class="med-name">Povidone-Iodine (Betadine)</span><span class="med-strength">Solution</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>Apply locally</option><option>BD</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>5 days</option><option>7 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Mupirocin Ointment 2%" data-category="Topical" onchange="updateSummary()">
+                                <span class="med-name">Mupirocin Ointment</span><span class="med-strength">2%</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>Apply BD</option><option>Apply TDS</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>5 days</option><option>7 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Calamine Lotion" data-category="Topical" onchange="updateSummary()">
+                                <span class="med-name">Calamine Lotion</span><span class="med-strength">Lotion</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>Apply locally SOS</option><option>Apply BD</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>5 days</option><option>7 days</option></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Others -->
+                    <div class="medicine-category animate-in delay-7">
+                        <div class="category-header" onclick="toggleCategory(this)">
+                            <span class="cat-icon">📦</span>
+                            <span class="cat-name">Others</span>
+                            <span class="cat-count">3 items</span>
+                            <span class="material-icons-outlined">expand_more</span>
+                        </div>
+                        <div class="medicine-grid collapsed">
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="ORS Sachets" data-category="Others" onchange="updateSummary()">
+                                <span class="med-name">ORS Sachets</span><span class="med-strength">Sachet</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>After each loose stool</option><option>1-1-1</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>3 days</option><option>5 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Cough Syrup (Dextromethorphan)" data-category="Others" onchange="updateSummary()">
+                                <span class="med-name">Cough Syrup (Dextromethorphan)</span><span class="med-strength">Syrup</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>10ml TDS</option><option>5ml TDS</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>3 days</option><option>5 days</option></select>
+                            </div>
+                            <div class="med-item">
+                                <input type="checkbox" class="med-checkbox" data-name="Salbutamol Inhaler" data-category="Others" onchange="updateSummary()">
+                                <span class="med-name">Salbutamol Inhaler</span><span class="med-strength">100mcg/puff</span>
+                                <select class="dosage-select" onchange="updateSummary()"><option>2 puffs SOS</option><option>2 puffs BD</option></select>
+                                <select class="duration-select" onchange="updateSummary()"><option>As needed</option><option>30 days</option></select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tests to Order -->
+                    <div id="tests" class="card animate-in delay-7" style="margin-top:20px;">
+                        <div class="card-header"><h2>Tests to Order</h2></div>
+                        <div class="tests-grid">
+                            <label class="test-item"><input type="checkbox" class="med-checkbox"> CBC</label>
+                            <label class="test-item"><input type="checkbox" class="med-checkbox"> LFT</label>
+                            <label class="test-item"><input type="checkbox" class="med-checkbox"> RFT / KFT</label>
+                            <label class="test-item"><input type="checkbox" class="med-checkbox"> Blood Sugar (F/PP)</label>
+                            <label class="test-item"><input type="checkbox" class="med-checkbox"> HbA1c</label>
+                            <label class="test-item"><input type="checkbox" class="med-checkbox"> Lipid Profile</label>
+                            <label class="test-item"><input type="checkbox" class="med-checkbox"> Thyroid (TSH)</label>
+                            <label class="test-item"><input type="checkbox" class="med-checkbox"> Urine R/M</label>
+                            <label class="test-item"><input type="checkbox" class="med-checkbox"> ECG</label>
+                            <label class="test-item"><input type="checkbox" class="med-checkbox"> Chest X-Ray</label>
+                            <label class="test-item"><input type="checkbox" class="med-checkbox"> USG Abdomen</label>
+                            <label class="test-item"><input type="checkbox" class="med-checkbox"> Serum Electrolytes</label>
+                        </div>
+                    </div>
+
+                    <!-- Advice -->
+                    <div class="card animate-in delay-8" style="margin-top:20px;">
+                        <div class="card-header"><h2>Advice / Instructions</h2></div>
+                        <div style="padding:4px 20px 20px;">
+                            <textarea class="advice-textarea" id="adviceText" placeholder="e.g., Rest for 3 days, reduce salt intake, increase water consumption, follow up in 1 week..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Summary Sidebar -->
+                <div class="rx-summary animate-in delay-4">
+                    <div class="rx-summary-header">
+                        <h3>📋 Prescription Summary</h3>
+                    </div>
+                    <div class="rx-summary-body" id="rxSummaryBody">
+                        <div class="rx-summary-empty">
+                            <span class="material-icons-outlined" style="font-size:40px;opacity:0.3;display:block;margin-bottom:8px;">receipt_long</span>
+                            Select medicines to build prescription
+                        </div>
+                    </div>
+                    <div class="rx-summary-footer">
+                        <button class="btn btn-success btn-lg" onclick="generatePrescription()" style="width:100%;justify-content:center;">
+                            <span class="material-icons-outlined" style="font-size:20px">print</span> Generate & Print
+                        </button>
+                        <button class="btn btn-secondary" onclick="clearAll()" style="width:100%;justify-content:center;">
+                            <span class="material-icons-outlined" style="font-size:18px">delete_outline</span> Clear All
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        function toggleCategory(header) {
+            header.classList.toggle('open');
+            const grid = header.nextElementSibling;
+            grid.classList.toggle('collapsed');
+        }
+
+        function updateSummary() {
+            const body = document.getElementById('rxSummaryBody');
+            const checked = document.querySelectorAll('.med-checkbox[data-name]:checked');
+
+            if (checked.length === 0) {
+                body.innerHTML = '<div class="rx-summary-empty"><span class="material-icons-outlined" style="font-size:40px;opacity:0.3;display:block;margin-bottom:8px;">receipt_long</span>Select medicines to build prescription</div>';
+                return;
+            }
+
+            let html = '';
+            checked.forEach((cb, i) => {
+                const item = cb.closest('.med-item');
+                const dosage = item.querySelector('.dosage-select').value;
+                const duration = item.querySelector('.duration-select').value;
+                html += `<div class="rx-summary-item">
+                    <div class="rsi-name">${i + 1}. ${cb.dataset.name}</div>
+                    <div class="rsi-dosage">${dosage} × ${duration}</div>
+                </div>`;
+
+                // Highlight selected items
+                item.classList.add('selected');
+            });
+
+            // Remove highlight from unchecked
+            document.querySelectorAll('.med-checkbox[data-name]:not(:checked)').forEach(cb => {
+                cb.closest('.med-item').classList.remove('selected');
+            });
+
+            body.innerHTML = html;
+        }
+
+        function generatePrescription() {
+            const checked = document.querySelectorAll('.med-checkbox[data-name]:checked');
+            if (checked.length === 0) {
+                alert('Please select at least one medicine.');
+                return;
+            }
+            const diagnosis = document.getElementById('diagnosisSearch').value || 'Not specified';
+            const advice = document.getElementById('adviceText').value;
+
+            let rxText = '══════════════════════════════════════\n';
+            rxText += '       SGHMS — E-PRESCRIPTION\n';
+            rxText += '══════════════════════════════════════\n\n';
+            rxText += 'Patient: Amit Verma (A-340)\n';
+            rxText += 'Age/Sex: 42 yrs / Male\n';
+            rxText += 'Diagnosis: ' + diagnosis + '\n';
+            rxText += 'Date: ' + new Date().toLocaleDateString('en-IN') + '\n\n';
+            rxText += '──────────────────────────────────────\n';
+            rxText += 'Rx:\n\n';
+
+            checked.forEach((cb, i) => {
+                const item = cb.closest('.med-item');
+                const dosage = item.querySelector('.dosage-select').value;
+                const duration = item.querySelector('.duration-select').value;
+                rxText += `  ${i + 1}. ${cb.dataset.name}\n     ${dosage}  ×  ${duration}\n\n`;
+            });
+
+            if (advice) {
+                rxText += '──────────────────────────────────────\n';
+                rxText += 'Advice: ' + advice + '\n';
+            }
+
+            rxText += '\n──────────────────────────────────────\n';
+            rxText += 'Dr. Priya Sharma\nGeneral Medicine, SGHMS\nReg. No: MCI-12345\n';
+
+            alert(rxText);
+            window.print();
+        }
+
+        function clearAll() {
+            document.querySelectorAll('.med-checkbox').forEach(cb => {
+                cb.checked = false;
+                const item = cb.closest('.med-item');
+                if (item) item.classList.remove('selected');
+            });
+            document.getElementById('diagnosisSearch').value = '';
+            document.getElementById('adviceText').value = '';
+            updateSummary();
+        }
+    </script>
+</body>
+</html>

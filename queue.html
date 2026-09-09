@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGHMS Doctor Portal - Live Queue</title>
+    <meta name="description" content="Live patient queue management with one-tap token calling.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <img src="emblem.svg" alt="Emblem" class="emblem-img">
+            <div class="brand-text">
+                <span class="brand-title">SGHMS</span>
+                <span class="brand-subtitle">Smart Government Healthcare<br>Management System</span>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item"><span class="material-icons-outlined">dashboard</span> Dashboard</a>
+            <a href="appointments.html" class="nav-item"><span class="material-icons-outlined">calendar_today</span> My Appointments</a>
+            <a href="patients.html" class="nav-item"><span class="material-icons-outlined">people</span> Patients</a>
+            <a href="queue.html" class="nav-item active"><span class="material-icons-outlined">format_list_numbered</span> Queue</a>
+            <a href="prescription.html" class="nav-item"><span class="material-icons-outlined">medication</span> Prescriptions</a>
+            <a href="records.html" class="nav-item"><span class="material-icons-outlined">folder_shared</span> Medical Records</a>
+            <a href="alerts.html" class="nav-item"><span class="material-icons-outlined">notifications</span> Alerts</a>
+            <a href="profile.html" class="nav-item"><span class="material-icons-outlined">person</span> Profile</a>
+            <a href="help.html" class="nav-item"><span class="material-icons-outlined">help_outline</span> Help &amp; Support</a>
+        </nav>
+        <div class="sidebar-footer"><a href="#" class="nav-item logout"><span class="material-icons-outlined">logout</span> Log Out</a></div>
+    </aside>
+
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="mobile-brand">SGHMS</div>
+            <div class="header-left"><button class="hamburger-btn" id="menuToggle"><span class="material-icons-outlined">menu</span></button></div>
+            <div class="header-right">
+                <button class="notification-btn"><span class="material-icons-outlined">notifications_none</span><span class="badge"></span></button>
+                <div class="doctor-profile">
+                    <div class="doctor-avatar"><svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="20" r="10" fill="#3b82f6"/><path d="M16 48c0-8.837 7.163-16 16-16s16 7.163 16 16" fill="#3b82f6"/><circle cx="32" cy="42" r="2" fill="white"/></svg></div>
+                    <div class="doctor-info"><span class="name">Dr. Priya Sharma</span><span class="role">General Medicine</span></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Status Switcher -->
+        <div class="status-bar">
+            <span class="status-bar-label">My Status:</span>
+            <button class="status-btn active" data-status="opd"><span class="status-dot-ind"></span> In OPD</button>
+            <button class="status-btn" data-status="emergency"><span class="status-dot-ind"></span> Emergency Ward</button>
+            <button class="status-btn" data-status="rounds"><span class="status-dot-ind"></span> Rounds</button>
+            <button class="status-btn" data-status="break"><span class="status-dot-ind"></span> Break</button>
+        </div>
+        <div class="queue-pause-banner" id="queuePauseBanner">
+            <span class="material-icons-outlined">pause_circle</span>
+            <span class="pause-text">Queue paused</span>
+        </div>
+
+        <!-- Queue Page -->
+        <section class="page-content">
+            <h1 class="page-title">Live Queue</h1>
+
+            <!-- Stats row -->
+            <div class="stats-grid" style="grid-template-columns: repeat(3,1fr); margin-bottom: 24px;">
+                <div class="stat-card animate-in delay-1">
+                    <div class="stat-icon blue"><span class="material-icons-outlined">groups</span></div>
+                    <div class="stat-info"><div class="stat-value">8</div><div class="stat-label">Waiting</div></div>
+                </div>
+                <div class="stat-card animate-in delay-2">
+                    <div class="stat-icon green"><span class="material-icons-outlined">check_circle</span></div>
+                    <div class="stat-info"><div class="stat-value">14</div><div class="stat-label">Completed Today</div></div>
+                </div>
+                <div class="stat-card animate-in delay-3">
+                    <div class="stat-icon orange"><span class="material-icons-outlined">timer</span></div>
+                    <div class="stat-info"><div class="stat-value">~18 min</div><div class="stat-label">Avg. Wait Time</div></div>
+                </div>
+            </div>
+
+            <div class="queue-page-grid">
+                <!-- Left: Now Serving + Call Next -->
+                <div class="animate-in delay-4">
+                    <!-- Now Serving -->
+                    <div class="now-serving-card" id="nowServingCard">
+                        <div class="ns-label">Now Serving</div>
+                        <div class="ns-token" id="nsToken">A-340</div>
+                        <div class="ns-name" id="nsName">Amit Verma</div>
+                        <div class="ns-complaint" id="nsComplaint">Complaint: Persistent headache, dizziness for 3 days</div>
+                        <div class="ns-actions">
+                            <a href="patient.html" class="btn btn-white"><span class="material-icons-outlined" style="font-size:18px">visibility</span> View Summary</a>
+                            <a href="prescription.html" class="btn btn-outline-white"><span class="material-icons-outlined" style="font-size:18px">edit_note</span> Prescribe</a>
+                        </div>
+                    </div>
+
+                    <!-- Call Next -->
+                    <div class="call-next-section" style="margin-top:24px;">
+                        <button class="call-next-btn" id="callNextBtn" onclick="callNextPatient()">
+                            <span class="material-icons-outlined">notifications_active</span>
+                            <span>Call Next</span>
+                        </button>
+                        <div style="display:flex;gap:10px;">
+                            <button class="btn btn-secondary btn-sm" onclick="skipPatient()"><span class="material-icons-outlined" style="font-size:16px">skip_next</span> Skip</button>
+                            <button class="btn btn-secondary btn-sm" onclick="recallPatient()"><span class="material-icons-outlined" style="font-size:16px">replay</span> Recall</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Waiting List -->
+                <div class="animate-in delay-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Waiting List</h2>
+                            <span class="view-all" style="cursor:default;color:var(--text-muted)">8 patients</span>
+                        </div>
+                        <div class="queue-waiting-list" id="waitingList">
+                            <div class="queue-row" data-token="A-341">
+                                <span class="q-token">A-341</span>
+                                <div class="q-info"><div class="q-name">Neha Gupta</div><div class="q-complaint">Fever, sore throat</div></div>
+                                <span class="q-wait">30 min</span>
+                            </div>
+                            <div class="queue-row" data-token="A-342">
+                                <span class="q-token">A-342</span>
+                                <div class="q-info"><div class="q-name">Vikram Joshi</div><div class="q-complaint">Lower back pain</div></div>
+                                <span class="q-wait">45 min</span>
+                            </div>
+                            <div class="queue-row" data-token="A-343">
+                                <span class="q-token">A-343</span>
+                                <div class="q-info"><div class="q-name">Rohit Sharma</div><div class="q-complaint">Skin rash, itching</div></div>
+                                <span class="q-wait">55 min</span>
+                            </div>
+                            <div class="queue-row" data-token="A-344">
+                                <span class="q-token">A-344</span>
+                                <div class="q-info"><div class="q-name">Sunita Devi</div><div class="q-complaint">Follow-up: Diabetes</div></div>
+                                <span class="q-wait">65 min</span>
+                            </div>
+                            <div class="queue-row" data-token="A-345">
+                                <span class="q-token">A-345</span>
+                                <div class="q-info"><div class="q-name">Manoj Kumar</div><div class="q-complaint">Cough, cold — 5 days</div></div>
+                                <span class="q-wait">72 min</span>
+                            </div>
+                            <div class="queue-row" data-token="A-346">
+                                <span class="q-token">A-346</span>
+                                <div class="q-info"><div class="q-name">Anita Yadav</div><div class="q-complaint">Joint pain, swelling</div></div>
+                                <span class="q-wait">80 min</span>
+                            </div>
+                            <div class="queue-row" data-token="A-347">
+                                <span class="q-token">A-347</span>
+                                <div class="q-info"><div class="q-name">Rajesh Patel</div><div class="q-complaint">Stomach pain, acidity</div></div>
+                                <span class="q-wait">88 min</span>
+                            </div>
+                            <div class="queue-row" data-token="A-348">
+                                <span class="q-token">A-348</span>
+                                <div class="q-info"><div class="q-name">Kavita Mehra</div><div class="q-complaint">Chest tightness, anxiety</div></div>
+                                <span class="q-wait">95 min</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Completed Today -->
+                    <div class="card completed-section">
+                        <button class="completed-toggle" id="completedToggle" onclick="toggleCompleted()">
+                            <span class="material-icons-outlined">expand_more</span>
+                            Completed Today (14)
+                        </button>
+                        <div class="completed-list" id="completedList">
+                            <div class="completed-row"><span class="q-token">A-326</span><div class="q-info"><div class="q-name">Arun Mishra</div></div><span class="q-wait">08:10 AM</span></div>
+                            <div class="completed-row"><span class="q-token">A-327</span><div class="q-info"><div class="q-name">Suman Rani</div></div><span class="q-wait">08:28 AM</span></div>
+                            <div class="completed-row"><span class="q-token">A-328</span><div class="q-info"><div class="q-name">Deepak Verma</div></div><span class="q-wait">08:45 AM</span></div>
+                            <div class="completed-row"><span class="q-token">A-329</span><div class="q-info"><div class="q-name">Priti Chauhan</div></div><span class="q-wait">09:02 AM</span></div>
+                            <div class="completed-row"><span class="q-token">A-330</span><div class="q-info"><div class="q-name">Ramesh Singh</div></div><span class="q-wait">09:18 AM</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        // Queue data
+        const queueData = [
+            { token: 'A-341', name: 'Neha Gupta', complaint: 'Fever, sore throat' },
+            { token: 'A-342', name: 'Vikram Joshi', complaint: 'Lower back pain' },
+            { token: 'A-343', name: 'Rohit Sharma', complaint: 'Skin rash, itching' },
+            { token: 'A-344', name: 'Sunita Devi', complaint: 'Follow-up: Diabetes' },
+            { token: 'A-345', name: 'Manoj Kumar', complaint: 'Cough, cold — 5 days' },
+            { token: 'A-346', name: 'Anita Yadav', complaint: 'Joint pain, swelling' },
+            { token: 'A-347', name: 'Rajesh Patel', complaint: 'Stomach pain, acidity' },
+            { token: 'A-348', name: 'Kavita Mehra', complaint: 'Chest tightness, anxiety' }
+        ];
+        let currentIndex = 0;
+
+        function callNextPatient() {
+            if (document.body.dataset.doctorStatus && document.body.dataset.doctorStatus !== 'opd') {
+                alert('Cannot call next patient — Queue is paused. Switch status to "In OPD" first.');
+                return;
+            }
+            if (currentIndex >= queueData.length) {
+                document.getElementById('nsToken').textContent = '—';
+                document.getElementById('nsName').textContent = 'No more patients';
+                document.getElementById('nsComplaint').textContent = '';
+                return;
+            }
+
+            const next = queueData[currentIndex];
+            const card = document.getElementById('nowServingCard');
+            card.style.transform = 'scale(0.97)';
+            setTimeout(() => { card.style.transform = ''; }, 200);
+
+            document.getElementById('nsToken').textContent = next.token;
+            document.getElementById('nsName').textContent = next.name;
+            document.getElementById('nsComplaint').textContent = 'Complaint: ' + next.complaint;
+
+            // Remove from waiting list
+            const row = document.querySelector(`.queue-row[data-token="${next.token}"]`);
+            if (row) {
+                row.style.opacity = '0';
+                row.style.transform = 'translateX(-20px)';
+                setTimeout(() => row.remove(), 300);
+            }
+            currentIndex++;
+        }
+
+        function skipPatient() {
+            callNextPatient();
+        }
+
+        function recallPatient() {
+            const card = document.getElementById('nowServingCard');
+            card.style.animation = 'pulse-emergency 0.5s';
+            setTimeout(() => { card.style.animation = ''; }, 500);
+            alert('Recalling: ' + document.getElementById('nsToken').textContent + ' — ' + document.getElementById('nsName').textContent);
+        }
+
+        function toggleCompleted() {
+            const btn = document.getElementById('completedToggle');
+            const list = document.getElementById('completedList');
+            btn.classList.toggle('open');
+            list.classList.toggle('show');
+        }
+    </script>
+</body>
+</html>
